@@ -19,7 +19,7 @@ interface StudentCardProps {
 
 export function StudentCard({
   student,
-  index,
+  // index,
   grade,
   onUpdate,
   onRemove,

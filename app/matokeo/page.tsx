@@ -317,19 +317,30 @@ export default function AddResultsPage() {
 
         {/* Student Cards */}
         <div className="space-y-6">
-          {students.map((student) => (
-            <div
-              key={student.id}
-              className="bg-white shadow-xl rounded-3xl p-6 border border-gray-100 hover:shadow-2xl transition duration-300"
-            >
-              <StudentCard
-                student={student}
-                onUpdate={handleUpdateStudent}
-                onRemove={handleRemoveStudent}
-                canRemove={students.length > 1}
-              />
-            </div>
-          ))}
+          {students.map((student, i) => {
+            const marksNum = student.marks === '' ? null : Number(student.marks);
+            const gradeObj =
+              marksNum === null
+                ? null
+                : gradeSystem.find((g) => marksNum >= g.min && marksNum <= g.max) || null;
+            const grade = gradeObj ? gradeObj.grade : null;
+
+            return (
+              <div
+                key={student.id}
+                className="bg-white shadow-xl rounded-3xl p-6 border border-gray-100 hover:shadow-2xl transition duration-300"
+              >
+                <StudentCard
+                  student={student}
+                  index={i}
+                  grade={grade}
+                  onUpdate={handleUpdateStudent}
+                  onRemove={handleRemoveStudent}
+                  canRemove={students.length > 1}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Add Student Button */}
